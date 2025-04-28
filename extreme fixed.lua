@@ -1,4 +1,30 @@
 local v = game.Players.LocalPlayer
+local function applyTween(color, duration)
+    local tweenInfo = TweenInfo.new(duration)
+    local tweenProperties = {Color = color}
+
+    for _, v in pairs(game.Workspace.CurrentRooms:GetDescendants()) do
+        if v:IsA("Light") then
+            game.TweenService:Create(v, tweenInfo, tweenProperties):Play()
+            if v.Parent.Name == "LightFixture" then
+                game.TweenService:Create(v.Parent, tweenInfo, tweenProperties):Play()
+            end
+        end
+    end
+end
+
+Spawn1 = coroutine.wrap(function()
+while task.wait(0) do
+local roomdoor = game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Door.Door
+		roomdoor.Material = "Ice"
+		roomdoor.Sign.Material = "Ice"
+		end
+		end)
+		Spawn1()
+local EntityInfo = {}
+function EntityInfo.DeathHint(messages, color)
+    game.ReplicatedStorage.EntityInfo.DeathHint:Fire(messages, color)
+end
 
 	local SelfModules = {
 		Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))(),
@@ -30,13 +56,3 @@ require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("
 wait(2)
 
 require(game.Players.LocalPlayer.PlayerGui.MainUI.Initiator.Main_Game).caption("Original Creator:Tinkgy#111 and other..",true)
-
-Spawn1 = coroutine.wrap(function()
-while task.wait(0) do
-local roomdoor = game.Workspace.CurrentRooms[game.ReplicatedStorage.GameData.LatestRoom.Value].Door.Door
-		roomdoor.Material = "Ice"
-		roomdoor.Sign.Material = "Ice"
-		end
-		end)
-		Spawn1()
-wait(3)
