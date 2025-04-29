@@ -132,3 +132,58 @@ coroutine.wrap(function()
         end
     end
 end)()
+local entityName = "disappointed"
+
+coroutine.wrap(function()
+    local startTime = tick() -- Record the starting time
+
+    while tick() - startTime < 50 do -- Loop until 50 seconds have passed
+        local static = Instance.new("Sound")
+        static.SoundId = "rbxassetid://9120425687"
+        static.Parent = game.ReplicatedStorage
+        static.Name = "Se"
+        static.Pitch = 0.6
+        static.Volume = 1.5
+        static.TimePosition = 0.2
+        static:Play()
+
+        local GUI = Instance.new("ScreenGui", game.Players.LocalPlayer.PlayerGui)
+        local Image = Instance.new("ImageLabel", GUI)
+
+        GUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+        Image.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        Image.BackgroundTransparency = 1
+        Image.Size = UDim2.new(1, 0, 1, 0)
+        Image.Image = "rbxassetid://13362464118"
+        Image.ImageTransparency = 0
+
+        task.wait(1)
+        game.Players.LocalPlayer.PlayerGui.ScreenGui:Destroy()
+
+        local character = game.Players.LocalPlayer.Character
+        local humanoid = character and character:FindFirstChild("Humanoid")
+        local startCFrame = character and character.PrimaryPart.CFrame
+
+        if humanoid and startCFrame then
+            local moved = false
+            for _ = 1, 25 do
+                task.wait(0.1)
+                if character.PrimaryPart.CFrame ~= startCFrame then
+                    moved = true
+                    break
+                end
+            end
+
+            if moved then
+                humanoid.Health = 0
+                EntityInfo.DeathHint(entityName .. " is watching... You should not have moved...", "Blue")
+                task.wait(math.random(1, 2))
+                EntityInfo.DeathHint(entityName .. " whispers... Your end has come...", "Blue")
+                task.wait(math.random(2, 3))
+                EntityInfo.DeathHint(entityName .. " fades away... Farewell...", "Blue")
+                break
+            end
+        end
+    end
+end)()
