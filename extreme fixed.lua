@@ -109,12 +109,11 @@ coroutine.wrap(function()
 
             local moved = false
             local function checkMovement()
-                for _ = 1, 25 do -- 2.5 seconds check (0.1 * 25 = 2.5)
+                for _ = 1, 10 do -- 2.5 seconds check (0.1 * 25 = 2.5)
                     task.wait(0.1)
-                    if character.PrimaryPart.CFrame ~= startCFrame then
+                    if humanoid.MoveDirection.Magnitude > 0 then
                         moved = true
-                        break
-                    end
+		    end
                 end
             end
 
@@ -140,7 +139,7 @@ local entityName = "disappointed"
 coroutine.wrap(function()
     local startTime = tick() -- Record the starting time
 
-    while tick() - startTime < 50 do -- Loop until 50 seconds have passed
+    while task.wait(65) do -- Loop until 50 seconds have passed
         local static = Instance.new("Sound")
         static.SoundId = "rbxassetid://9120425687"
         static.Parent = game.ReplicatedStorage
@@ -168,14 +167,13 @@ coroutine.wrap(function()
         local humanoid = character and character:FindFirstChild("Humanoid")
         local startCFrame = character and character.PrimaryPart.CFrame
 
-        if humanoid and startCFrame then
+        if humanoid then
             local moved = false
-            for _ = 1, 25 do
+            for _ = 1, 10 do
                 task.wait(0.1)
-                if character.PrimaryPart.CFrame ~= startCFrame then
+                if humanoid.MoveDirection.Magnitude > 0 then
                     moved = true
-                    break
-                end
+		end
             end
 
             if moved then
