@@ -193,7 +193,8 @@ local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/Regul
 ---====== Timer-based Execution ======---
 
 coroutine.wrap(function()
-    task.wait(135) -- Wait for 135 seconds before executing entity logic
+    while task.wait(135) do -- Wait for 135 seconds before executing entity logic
+			
     applyTween(Color3.fromRGB(255, 0, 0), 1.5) -- Red color effect for 1.5 seconds
 	local Idle = GetGitSound("https://github.com/Brololto/G95-MOVING/blob/main/Screen_Recording_20230323-172501_YouTube%20(online-audio-converter.com)%20(1).mp3?raw=true","anxddg")
 	Idle.Parent = workspace
@@ -225,8 +226,8 @@ coroutine.wrap(function()
             Values = {1.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
         },
         Movement = {
-            Speed = 100,
-            Delay = 8,
+            Speed = 700,
+            Delay = 12,
             Reversed = false
         },
         Rebounding = {
@@ -297,6 +298,15 @@ coroutine.wrap(function()
 	Slam.Parent = workspace
         Slam.Volume = 20
 	Slam:Play()
+	local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
+
+---====== Display achievement ======---
+        achievementGiver({
+            Title = "Scream Demon of Hell",
+            Desc = "You will died",
+            Reason = "Encounter G-95",
+            Image = "rbxassetid://3457898957"
+        })
     end)
 
     entity:SetCallback("OnDamagePlayer", function(newHealth)
