@@ -84,7 +84,7 @@ coroutine.wrap(function()
         Bell.Volume = 5
         Bell:Play()
 
-        game.Lighting.MainColorCorrection.TintColor = "Blue"
+        game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(71, 151, 211)
         game.Lighting.MainColorCorrection.Contrast = 1
 
         local tween = game:GetService("TweenService")
@@ -96,9 +96,9 @@ coroutine.wrap(function()
 
         wait(34)
 
-        game.ReplicatedStorage.EntityInfo.UseEventModule.OnClientEvent:Fire("flicker", game.ReplicatedStorage.GameData.LatestRoom.Value, 1)
+        
 
-        wait(math.random(2, 5))
+        wait(0)
 
         local character = game.Players.LocalPlayer.Character
         local humanoid = character and character:FindFirstChild("Humanoid")
@@ -194,7 +194,12 @@ local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/Regul
 
 coroutine.wrap(function()
     task.wait(135) -- Wait for 135 seconds before executing entity logic
-
+    applyTween(Color3.fromRGB(255, 0, 0), 1.5) -- Red color effect for 1.5 seconds
+	local Idle = GetGitSound("https://github.com/Brololto/G95-MOVING/blob/main/Screen_Recording_20230323-172501_YouTube%20(online-audio-converter.com)%20(1).mp3?raw=true","anxddg")
+	Idle.Parent = workspace
+	Idle.Volume = 20
+	Idle:Play()
+		
     ---====== Create entity ======---
 
     local entity = spawner.Create({
@@ -221,7 +226,7 @@ coroutine.wrap(function()
         },
         Movement = {
             Speed = 100,
-            Delay = 2,
+            Delay = 8,
             Reversed = false
         },
         Rebounding = {
@@ -252,11 +257,7 @@ coroutine.wrap(function()
     ---====== Debug entity ======---
 
     entity:SetCallback("OnSpawned", function()
-        applyTween(Color3.fromRGB(255, 0, 0), 1.5) -- Red color effect for 1.5 seconds
-	local Idle = GetGitSound("https://github.com/Brololto/G95-MOVING/blob/main/Screen_Recording_20230323-172501_YouTube%20(online-audio-converter.com)%20(1).mp3?raw=true","anxddg")
-	Idle.Parent = workspace
-	Idle.Volume = 20
-	Idle:Play()
+        print("0")
     end)
 
     entity:SetCallback("OnStartMoving", function()
