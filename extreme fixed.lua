@@ -1,3 +1,16 @@
+local SelfModules = {
+		Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))(),
+}
+
+    local function GetGitSound(GithubSnd,SoundName)
+				local url=GithubSnd
+				if not isfile(SoundName..".mp3") then
+					writefile(SoundName..".mp3", game:HttpGet(url))
+				end
+				local sound=Instance.new("Sound")
+				sound.SoundId=(getcustomasset or getsynasset)(SoundName..".mp3")
+				return sound
+end
 local v = game.Players.LocalPlayer
 local function applyTween(color, duration)
     local tweenInfo = TweenInfo.new(duration)
@@ -26,21 +39,11 @@ function EntityInfo.DeathHint(messages, color)
     game.ReplicatedStorage.EntityInfo.DeathHint:Fire(messages, color)
 end
 
-	local SelfModules = {
-		Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))(),
-}
+	
 
 game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Wait()  
 
-    local function GetGitSound(GithubSnd,SoundName)
-				local url=GithubSnd
-				if not isfile(SoundName..".mp3") then
-					writefile(SoundName..".mp3", game:HttpGet(url))
-				end
-				local sound=Instance.new("Sound")
-				sound.SoundId=(getcustomasset or getsynasset)(SoundName..".mp3")
-				return sound
-			end
+    
    local roar = GetGitSound("https://github.com/Tinkgy111/Bang/blob/main/Screen_Recording_20230519-203543_YouTube.mp3?raw=true","roarove")
 
 				roar.Parent = workspace
@@ -252,6 +255,10 @@ coroutine.wrap(function()
 
     entity:SetCallback("OnSpawned", function()
         applyTween(Color3.fromRGB(255, 0, 0), 1.5) -- Red color effect for 1.5 seconds
+	local Idle = GetGitSound("https://github.com/Brololto/G95-MOVING/blob/main/Screen_Recording_20230323-172501_YouTube%20(online-audio-converter.com)%20(1).mp3?raw=true","anxddg")
+	Idle.Parent = workspace
+	Idle.Volume = 20
+	Idle:Play()
     end)
 
     entity:SetCallback("OnStartMoving", function()
@@ -287,7 +294,10 @@ coroutine.wrap(function()
     end)
 
     entity:SetCallback("OnDespawned", function()
-        print("Entity has despawned")
+        local Slam = GetGitSound("https://github.com/Brololto/FUCKYOUFACCIST/blob/main/Screen_Recording_20230407-114843_YouTube%20(online-audio-converter.com).mp3?raw=true","Slamsaa")
+	Slam.Parent = workspace
+        Slam.Volume = 20
+	Slam:Play()
     end)
 
     entity:SetCallback("OnDamagePlayer", function(newHealth)
