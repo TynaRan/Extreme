@@ -91,14 +91,10 @@ coroutine.wrap(function()
         tween:Create(game.Lighting.MainColorCorrection, TweenInfo.new(2.5), {Contrast = 0}):Play()
 
         local TweenService = game:GetService("TweenService")
-        local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(80), {TintColor = "White"})
+        local TW = TweenService:Create(game.Lighting.MainColorCorrection, TweenInfo.new(80), {TintColor = Color3.fromRGB(255, 255, 255)})
         TW:Play()
 
         wait(34)
-
-        
-
-        wait(0)
 
         local character = game.Players.LocalPlayer.Character
         local humanoid = character and character:FindFirstChild("Humanoid")
@@ -109,11 +105,11 @@ coroutine.wrap(function()
 
             local moved = false
             local function checkMovement()
-                for _ = 1, 10 do -- 2.5 seconds check (0.1 * 25 = 2.5)
+                for _ = 1, 10 do -- 2.5 seconds check (0.1 * 10 = 1 second)
                     task.wait(0.1)
                     if humanoid.MoveDirection.Magnitude > 0 then
                         moved = true
-		    end
+                    end
                 end
             end
 
@@ -128,9 +124,12 @@ coroutine.wrap(function()
                 EntityInfo.DeathHint(entityName .. " whispers... Your end has come...", "Blue")
                 task.wait(math.random(2, 3))
                 EntityInfo.DeathHint(entityName .. " fades away... Farewell...", "Blue")
+            else
+                -- Restore world settings after all checks are complete
+                game.Lighting.MainColorCorrection.TintColor = Color3.fromRGB(255, 255, 255)
+                game.Lighting.MainColorCorrection.Contrast = 0
+                game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
             end
-
-            -- If not moved, everything cancels and waits for the next cycle
         end
     end
 end)()
