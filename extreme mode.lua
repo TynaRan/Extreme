@@ -139,7 +139,7 @@ local entityName = "disappointed"
 coroutine.wrap(function()
     local startTime = tick() -- Record the starting time
 
-    while task.wait(65) do -- Loop until 50 seconds have passed
+    while task.wait(85) do -- Loop until 50 seconds have passed
         local static = Instance.new("Sound")
         static.SoundId = "rbxassetid://9120425687"
         static.Parent = game.ReplicatedStorage
@@ -299,22 +299,17 @@ coroutine.wrap(function()
             Slam:Play()
 
             local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
-
             local character = game.Players.LocalPlayer.Character
             local humanoid = character and character:FindFirstChild("Humanoid")
 
-            if humanoid and humanoid.Health > 0 then
-                ---====== Display achievement ======---
-                achievementGiver({
-                    Title = "Scream Demon of Hell",
-                    Desc = "You will died",
-                    Reason = "Encounter G-95",
-                    Image = "rbxassetid://3457898957"
-                })
-            else
-                print("achievement not granted.")
-            end
-        end)
+    
+            humanoid and humanoid.Health > 0 and achievementGiver({
+                Title = "Scream Demon of Hell",
+                Desc = "You will died",
+                Reason = "Encounter G-95",
+                Image = "rbxassetid://3457898957"
+            }) or print("Achievement not granted.")
+	end)
 
         entity:SetCallback("OnDamagePlayer", function(newHealth)
             if newHealth == 0 then
