@@ -15,8 +15,8 @@ local modifyNeonCoroutine = coroutine.wrap(function()
         modifyAllNeon()
     end
 end)
-game.SoundService.AmbientReverb = Enum.ReverbType.Cave 
-game.SoundService.AmbientVolume = 0.8 
+--game.SoundService.AmbientReverb = Enum.ReverbType.Cave 
+--game.SoundService.AmbientVolume = 0.8 
 modifyNeonCoroutine()
 coroutine.wrap(function()
     while true do
