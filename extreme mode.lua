@@ -323,16 +323,23 @@ coroutine.wrap(function()
                     HeightOffset = 0
                 },
                 Lights = {
-                    Flicker = { Enabled = true, Duration = 1 },
+                    Flicker = { Enabled = false, Duration = 1 },
                     Shatter = true,
                     Repair = false
                 },
-                Earthquake = { Enabled = true },
+                Earthquake = { Enabled = false },
                 CameraShake = {
                     Enabled = true,
                     Range = 100,
                     Values = {1.5, 20, 0.1, 1}
                 },
+		Rebounding = {
+		    Enabled = false,
+		    Type = "Ambush", -- "Blitz"
+		    Min = 2,
+		    Max = 4,
+		    Delay = 2
+	        },
                 Movement = {
                     Speed = 700,
                     Delay = 12,
