@@ -39,7 +39,54 @@ function EntityInfo.DeathHint(messages, color)
     game.ReplicatedStorage.EntityInfo.DeathHint:Fire(messages, color)
 end
 
-	
+	local Lighting = game:GetService("Lighting")
+local atmosphere = workspace:FindFirstChildOfClass("Atmosphere") or Instance.new("Atmosphere", Lighting)
+
+local function updateLightingAndSound()
+    Lighting.Technology = Enum.Technology.Future
+    Lighting.EnvironmentDiffuseScale = 0.35  
+    Lighting.EnvironmentSpecularScale = 0.35  
+    Lighting.OutdoorAmbient = Color3.fromRGB(5, 5, 5)  
+    Lighting.Ambient = Color3.fromRGB(10, 10, 10)  
+    Lighting.GlobalShadows = true
+    Lighting.ShadowSoftness = 0.7
+    Lighting.ClockTime = 18.5  
+    Lighting.Brightness = 0.3  
+    Lighting.ColorShift_Bottom = Color3.fromRGB(15, 15, 15)
+    Lighting.ColorShift_Top = Color3.fromRGB(25, 25, 25)
+    Lighting.ExposureCompensation = -0.75  
+    Lighting.ShadowColor = Color3.fromRGB(15, 15, 15)
+    Lighting.GeographicLatitude = 45
+    
+    atmosphere.Density = 0.75  
+    atmosphere.Color = Color3.fromRGB(20, 20, 20)
+    atmosphere.Haze = 0.8  
+    
+    local colorCorrection = Lighting:FindFirstChildOfClass("ColorCorrectionEffect") or Instance.new("ColorCorrectionEffect", Lighting)
+    colorCorrection.Contrast = 0.25
+    colorCorrection.Saturation = -0.4  
+
+    local function setBlueLighting(light)
+        light.Shadows = true
+        light.Brightness = 0.5  
+        light.Range = 10
+        light.Color = Color3.fromRGB(0, 150, 255)  
+    end
+    
+    for _, light in pairs(workspace:GetDescendants()) do
+        if light:IsA("PointLight") or light:IsA("SpotLight") or light:IsA("SurfaceLight") then
+            setBlueLighting(light)
+        end
+    end
+end
+
+task.spawn(function()
+    while true do
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+			
+        updateLightingAndSound()
+    end
+end)
 
 game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Wait()  
 
