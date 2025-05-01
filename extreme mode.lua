@@ -8,7 +8,7 @@ local function modifyAllNeon()
         end
     end
 end
-
+game.SoundService.AmbientReverb = Enum.ReverbType.Bathroom 
 local modifyNeonCoroutine = coroutine.wrap(function()
     while true do
         game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
