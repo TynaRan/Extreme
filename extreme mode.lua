@@ -410,12 +410,16 @@ coroutine.wrap(function()
 end)()
 local TweenService = game:GetService("TweenService")
 
+local executed = {} -- Tracks already processed models
+
 coroutine.wrap(function()
     while true do
         task.wait(1)
 
         for _, model in ipairs(game.Workspace:GetChildren()) do
-            if string.lower(model.Name) == "50" and model.PrimaryPart then
+            if string.lower(model.Name) == "50" and model.PrimaryPart and not executed[model] then
+                executed[model] = true -- Mark as processed
+
                 for _, obj in ipairs(model:GetChildren()) do
                     if obj.Name == "RoomExit" then
                         local asset = game:GetObjects("rbxassetid://13989622160")[1]
@@ -429,11 +433,11 @@ coroutine.wrap(function()
                     local parts = {}
 
                     for _, obj in ipairs(nodes:GetChildren()) do
-                        table.insert(parts, obj) -- No type checking, all child objects are considered
+                        table.insert(parts, obj)
                     end
 
                     table.sort(parts, function(a, b)
-                        return (model.PrimaryPart.Position - a.Position).Magnitude < (model.PrimaryPart.Position - b.Position).Magnitude
+                        return (model.PrimaryPart.CFrame - a.CFrame).Magnitude < (model.PrimaryPart.CFrame - b.CFrame).Magnitude
                     end)
 
                     local startCFrame = model.PrimaryPart.CFrame
@@ -453,6 +457,19 @@ coroutine.wrap(function()
                     local returnTween = TweenService:Create(model.PrimaryPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {CFrame = startCFrame})
                     returnTween:Play()
                     returnTween.Completed:Wait()
+                end
+
+                for _, player in ipairs(game.Players:GetPlayers()) do
+                    local character = player.Character
+                    local humanoid = character and character:FindFirstChild("Humanoid")
+                    local rootPart = character and character:FindFirstChild("HumanoidRootPart")
+
+                    if humanoid and rootPart then
+                        local distance = (model.PrimaryPart.CFrame - rootPart.CFrame).Magnitude
+                        if distance <= 4.5 then
+                            humanoid.Health = 0
+                        end
+                    end
                 end
             end
         end
