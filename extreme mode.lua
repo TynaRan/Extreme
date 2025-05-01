@@ -8,14 +8,14 @@ local function modifyAllNeon()
         end
     end
 end
-game.SoundService.AmbientReverb = Enum.ReverbType.Bathroom 
+--game.SoundService.AmbientReverb = Enum.ReverbType.Cave
 local modifyNeonCoroutine = coroutine.wrap(function()
     while true do
         game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
         modifyAllNeon()
     end
 end)
---game.SoundService.AmbientReverb = Enum.ReverbType.Cave 
+game.SoundService.AmbientReverb = Enum.ReverbType.Cave 
 --game.SoundService.AmbientVolume = 0.8 
 modifyNeonCoroutine()
 coroutine.wrap(function()
