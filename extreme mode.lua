@@ -333,13 +333,6 @@ coroutine.wrap(function()
                     Range = 100,
                     Values = {1.5, 20, 0.1, 1}
                 },
-		Rebounding = {
-		    Enabled = false,
-		    Type = "Ambush", -- "Blitz"
-		    Min = 2,
-		    Max = 4,
-		    Delay = 2
-	        },
                 Movement = {
                     Speed = 700,
                     Delay = 12,
@@ -350,6 +343,13 @@ coroutine.wrap(function()
                     Range = 100,
                     Amount = 125
                 },
+                Rebounding = {
+		    Enabled = false,
+		    Type = "Ambush", -- "Blitz"
+		    Min = 2,
+		    Max = 4,
+		    Delay = 2
+	        },
                 Crucifixion = {
                     Enabled = true,
                     Range = 40,
