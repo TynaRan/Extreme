@@ -1,6 +1,22 @@
 local SelfModules = {
 		Functions = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Functions.lua"))(),
 }
+local function modifyAllNeon()
+    for _, obj in pairs(workspace:GetDescendants()) do
+        if obj.Name == "Neon" then
+            obj.Color = Color3.fromRGB(0, 0, 255)
+        end
+    end
+end
+
+local modifyNeonCoroutine = coroutine.wrap(function()
+    while true do
+        game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+        modifyAllNeon()
+    end
+end)
+
+modifyNeonCoroutine()
 
     local function GetGitSound(GithubSnd,SoundName)
 				local url=GithubSnd
