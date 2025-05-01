@@ -186,20 +186,18 @@ coroutine.wrap(function()
             end
         end
     end
-end)()
+end)()            
 local spawner = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Entity%20Spawner/V2/Source.lua"))()
 
 coroutine.wrap(function()
-    while true do -- Infinite loop for continuous execution
-        task.wait(135) -- Wait for 135 seconds before executing entity logic
+    while true do
+        task.wait(135)
 
-        applyTween(Color3.fromRGB(255, 0, 0), 1.5) -- Red color effect for 1.5 seconds
+        applyTween(Color3.fromRGB(255, 0, 0), 1.5)
         local Idle = GetGitSound("https://github.com/Brololto/G95-MOVING/blob/main/Screen_Recording_20230323-172501_YouTube%20(online-audio-converter.com)%20(1).mp3?raw=true", "anxddg")
         Idle.Parent = workspace
         Idle.Volume = 20
         Idle:Play()
-
-        ---====== Create entity ======---
 
         local entity = spawner.Create({
             Entity = {
@@ -208,32 +206,20 @@ coroutine.wrap(function()
                 HeightOffset = 0
             },
             Lights = {
-                Flicker = {
-                    Enabled = true,
-                    Duration = 1
-                },
+                Flicker = { Enabled = true, Duration = 1 },
                 Shatter = true,
                 Repair = false
             },
-            Earthquake = {
-                Enabled = true
-            },
+            Earthquake = { Enabled = true },
             CameraShake = {
                 Enabled = true,
                 Range = 100,
-                Values = {1.5, 20, 0.1, 1} -- Magnitude, Roughness, FadeIn, FadeOut
+                Values = {1.5, 20, 0.1, 1}
             },
             Movement = {
                 Speed = 700,
                 Delay = 12,
                 Reversed = false
-            },
-            Rebounding = {
-                Enabled = false,
-                Type = "Ambush",
-                Min = 1,
-                Max = 1,
-                Delay = 0
             },
             Damage = {
                 Enabled = true,
@@ -253,8 +239,6 @@ coroutine.wrap(function()
             }
         })
 
-        ---====== Debug entity ======---
-
         entity:SetCallback("OnSpawned", function()
             print("Entity has spawned")
         end)
@@ -264,27 +248,16 @@ coroutine.wrap(function()
         end)
 
         entity:SetCallback("OnEnterRoom", function(room, firstTime)
-            if firstTime == true then
-                print("Entity has entered room: " .. room.Name .. " for the first time")
-            else
-                print("Entity has entered room: " .. room.Name .. " again")
-            end
+            local roomName = room.Name
+            print("Entity has entered room: " .. roomName .. (firstTime and " for the first time" or " again"))
         end)
 
         entity:SetCallback("OnLookAt", function(lineOfSight)
-            if lineOfSight == true then
-                print("Player is looking at entity")
-            else
-                print("Player view is obstructed by something")
-            end
+            print(lineOfSight and "Player is looking at entity" or "Player view is obstructed by something")
         end)
 
         entity:SetCallback("OnRebounding", function(startOfRebound)
-            if startOfRebound == true then
-                print("Entity has started rebounding")
-            else
-                print("Entity has finished rebounding")
-            end
+            print(startOfRebound and "Entity has started rebounding" or "Entity has finished rebounding")
         end)
 
         entity:SetCallback("OnDespawning", function()
@@ -292,13 +265,16 @@ coroutine.wrap(function()
             local character = game.Players.LocalPlayer.Character
             local humanoid = character and character:FindFirstChild("Humanoid")
 
-    
-            humanoid and humanoid.Health > 0 and achievementGiver({
-                Title = "Scream Demon of Hell",
-                Desc = "You will died",
-                Reason = "Encounter G-95",
-                Image = "rbxassetid://3457898957"
-            }) or print("Achievement not granted.")
+            if humanoid and humanoid.Health > 0 then
+                achievementGiver({
+                    Title = "Scream Demon of Hell",
+                    Desc = "You will die",
+                    Reason = "Encounter G-95",
+                    Image = "rbxassetid://3457898957"
+                })
+            else
+                print("Achievement not granted.")
+            end
         end)
 
         entity:SetCallback("OnDespawned", function()
@@ -306,20 +282,12 @@ coroutine.wrap(function()
             Slam.Parent = workspace
             Slam.Volume = 20
             Slam:Play()
-	end)
-
-        entity:SetCallback("OnDamagePlayer", function(newHealth)
-            if newHealth == 0 then
-                print("Entity has killed the player")
-            else
-                print("Entity has damaged the player")
-            end
         end)
 
-        ---====== Run entity ======---
+        entity:SetCallback("OnDamagePlayer", function(newHealth)
+            print(newHealth == 0 and "Entity has killed the player" or "Entity has damaged the player")
+        end)
 
         entity:Run()
     end
 end)()
-
-        
