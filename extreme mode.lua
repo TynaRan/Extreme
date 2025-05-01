@@ -39,7 +39,7 @@ function EntityInfo.DeathHint(messages, color)
     game.ReplicatedStorage.EntityInfo.DeathHint:Fire(messages, color)
 end
 
-	local Lighting = game:GetService("Lighting")
+local Lighting = game:GetService("Lighting")
 local atmosphere = workspace:FindFirstChildOfClass("Atmosphere") or Instance.new("Atmosphere", Lighting)
 
 local function updateLightingAndSound()
@@ -80,13 +80,14 @@ local function updateLightingAndSound()
     end
 end
 
-task.spawn(function()
+local listenForRoomChanges = coroutine.wrap(function()
     while true do
         game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
-			
         updateLightingAndSound()
     end
 end)
+
+listenForRoomChanges()
 
 game:GetService("ReplicatedStorage").GameData.LatestRoom:GetPropertyChangedSignal("Value"):Wait()  
 
