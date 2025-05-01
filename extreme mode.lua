@@ -470,3 +470,20 @@ coroutine.wrap(function()
         end
     end
 end)()
+coroutine.wrap(function()
+while true do
+task.wait(0.1)
+
+for _, obj in ipairs(game.Workspace:GetDescendants()) do
+if obj:IsA("Sound") and not obj:FindFirstChild("ReverbEffect") then
+local reverb = Instance.new("ReverbSoundEffect")
+reverb.Name = "ReverbEffect"
+reverb.Parent = obj
+reverb.DryLevel = -10
+reverb.WetLevel = -2
+reverb.DecayTime = 1.5
+reverb.Density = 0.8
+end
+end
+end
+end)()
