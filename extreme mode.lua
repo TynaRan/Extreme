@@ -408,3 +408,53 @@ coroutine.wrap(function()
         end
     end
 end)()
+local TweenService = game:GetService("TweenService")
+
+coroutine.wrap(function()
+    while true do
+        task.wait(1)
+
+        for _, model in ipairs(game.Workspace:GetChildren()) do
+            if string.lower(model.Name) == "50" and model.PrimaryPart then
+                for _, obj in ipairs(model:GetChildren()) do
+                    if obj.Name == "RoomExit" then
+                        local asset = game:GetObjects("rbxassetid://13989622160")[1]
+                        asset.Parent = game.Workspace
+                        asset.CFrame = obj.CFrame * model.PrimaryPart.CFrame
+                    end
+                end
+
+                local nodes = model:FindFirstChild("Nodes")
+                if nodes then
+                    local parts = {}
+
+                    for _, obj in ipairs(nodes:GetChildren()) do
+                        table.insert(parts, obj) -- No type checking, all child objects are considered
+                    end
+
+                    table.sort(parts, function(a, b)
+                        return (model.PrimaryPart.Position - a.Position).Magnitude < (model.PrimaryPart.Position - b.Position).Magnitude
+                    end)
+
+                    local startCFrame = model.PrimaryPart.CFrame
+
+                    for _, part in ipairs(parts) do
+                        local tween = TweenService:Create(model.PrimaryPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {CFrame = part.CFrame})
+                        tween:Play()
+                        tween.Completed:Wait()
+                    end
+
+                    for i = #parts, 1, -1 do
+                        local tween = TweenService:Create(model.PrimaryPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {CFrame = parts[i].CFrame})
+                        tween:Play()
+                        tween.Completed:Wait()
+                    end
+
+                    local returnTween = TweenService:Create(model.PrimaryPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {CFrame = startCFrame})
+                    returnTween:Play()
+                    returnTween.Completed:Wait()
+                end
+            end
+        end
+    end
+end)()
