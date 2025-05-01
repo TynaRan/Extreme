@@ -288,15 +288,6 @@ coroutine.wrap(function()
         end)
 
         entity:SetCallback("OnDespawning", function()
-            print("Entity is despawning")
-        end)
-
-        entity:SetCallback("OnDespawned", function()
-            local Slam = GetGitSound("https://github.com/Brololto/FUCKYOUFACCIST/blob/main/Screen_Recording_20230407-114843_YouTube%20(online-audio-converter.com).mp3?raw=true", "Slamsaa")
-            Slam.Parent = workspace
-            Slam.Volume = 20
-            Slam:Play()
-
             local achievementGiver = loadstring(game:HttpGet("https://raw.githubusercontent.com/RegularVynixu/Utilities/main/Doors/Custom%20Achievements/Source.lua"))()
             local character = game.Players.LocalPlayer.Character
             local humanoid = character and character:FindFirstChild("Humanoid")
@@ -308,6 +299,13 @@ coroutine.wrap(function()
                 Reason = "Encounter G-95",
                 Image = "rbxassetid://3457898957"
             }) or print("Achievement not granted.")
+        end)
+
+        entity:SetCallback("OnDespawned", function()
+            local Slam = GetGitSound("https://github.com/Brololto/FUCKYOUFACCIST/blob/main/Screen_Recording_20230407-114843_YouTube%20(online-audio-converter.com).mp3?raw=true", "Slamsaa")
+            Slam.Parent = workspace
+            Slam.Volume = 20
+            Slam:Play()
 	end)
 
         entity:SetCallback("OnDamagePlayer", function(newHealth)
@@ -323,3 +321,5 @@ coroutine.wrap(function()
         entity:Run()
     end
 end)()
+
+        
