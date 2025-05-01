@@ -409,30 +409,38 @@ coroutine.wrap(function()
     end
 end)()
 local TweenService = game:GetService("TweenService")
-
-local executed = {} -- Tracks already processed models
+local executed = {}
 
 coroutine.wrap(function()
     while true do
-        task.wait(1)
+        task.wait(0.01)
 
-        for _, model in ipairs(game.Workspace:GetChildren()) do
+        local workspace = game:GetService("Workspace") -- Explicitly obtaining Workspace
+
+        for _, model in ipairs(workspace:GetChildren()) do
             if string.lower(model.Name) == "50" and model.PrimaryPart and not executed[model] then
-                executed[model] = true -- Mark as processed
+                executed[model] = true 
+
+                local pathFindNodes = nil
 
                 for _, obj in ipairs(model:GetChildren()) do
-                    if obj.Name == "RoomExit" then
-                        local asset = game:GetObjects("rbxassetid://13989622160")[1]
-                        asset.Parent = game.Workspace
-                        asset.CFrame = obj.CFrame * model.PrimaryPart.CFrame
+                    if string.find(string.lower(obj.Name), "pathfindnodes") then
+                        pathFindNodes = obj
+                        break
                     end
                 end
 
-                local nodes = model:FindFirstChild("Nodes")
-                if nodes then
+                if pathFindNodes then
+                    local clonedNode = pathFindNodes:Clone()
+                    clonedNode.Parent = workspace
+                    clonedNode.Name = "50Nodes"
+                end
+
+                local movementNodes = workspace:FindFirstChild("50Nodes")
+                if movementNodes then
                     local parts = {}
 
-                    for _, obj in ipairs(nodes:GetChildren()) do
+                    for _, obj in ipairs(movementNodes:GetChildren()) do
                         table.insert(parts, obj)
                     end
 
@@ -457,19 +465,6 @@ coroutine.wrap(function()
                     local returnTween = TweenService:Create(model.PrimaryPart, TweenInfo.new(1, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {CFrame = startCFrame})
                     returnTween:Play()
                     returnTween.Completed:Wait()
-                end
-
-                for _, player in ipairs(game.Players:GetPlayers()) do
-                    local character = player.Character
-                    local humanoid = character and character:FindFirstChild("Humanoid")
-                    local rootPart = character and character:FindFirstChild("HumanoidRootPart")
-
-                    if humanoid and rootPart then
-                        local distance = (model.PrimaryPart.CFrame - rootPart.CFrame).Magnitude
-                        if distance <= 4.5 then
-                            humanoid.Health = 0
-                        end
-                    end
                 end
             end
         end
