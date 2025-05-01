@@ -17,7 +17,21 @@ local modifyNeonCoroutine = coroutine.wrap(function()
 end)
 
 modifyNeonCoroutine()
+coroutine.wrap(function()
+    while true do
+        task.wait(0.01)
 
+        for _, obj in ipairs(game.Workspace:GetChildren()) do
+            if string.find(string.lower(obj.Name), "pathfindnodes") then
+                if not obj.Parent:FindFirstChild("Nodes") then
+                    local clonedNode = obj:Clone()
+                    clonedNode.Parent = obj.Parent
+                    clonedNode.Name = "Nodes"
+                end
+            end
+        end
+    end
+end)()
     local function GetGitSound(GithubSnd,SoundName)
 				local url=GithubSnd
 				if not isfile(SoundName..".mp3") then
