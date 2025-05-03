@@ -147,7 +147,7 @@ coroutine.wrap(function()
         local seekMovingExists = false
 
         for _, obj in ipairs(game.Workspace:GetChildren()) do
-            if string.find(obj.Name, "SeekMoving") then
+            if string.find(obj.Name, "SeekMovingNewClone") then
                 seekMovingExists = true
                 break
             end
@@ -233,7 +233,7 @@ coroutine.wrap(function()
         local seekMovingExists = false
 
         for _, obj in ipairs(game.Workspace:GetChildren()) do
-            if string.find(obj.Name, "SeekMoving") then
+            if string.find(obj.Name, "SeekMovingNewClone") then
                 seekMovingExists = true
                 break
             end
@@ -301,7 +301,7 @@ coroutine.wrap(function()
         local seekMovingExists = false
 
         for _, obj in ipairs(game.Workspace:GetChildren()) do
-            if string.find(obj.Name, "SeekMoving") then
+            if string.find(obj.Name, "SeekMovingNewClone") then
                 seekMovingExists = true
                 break
             end
