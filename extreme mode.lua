@@ -8,6 +8,36 @@ local function modifyAllNeon()
         end
     end
 end
+local function ReplaceAudGit(GithubSnd,SoundName)
+local url=GithubSnd
+local filePath=SoundName..".mp3"
+if not isfile(filePath)then
+writefile(filePath,game:HttpGet(url))
+end
+return(getcustomasset or getsynasset)(filePath)
+end
+
+local function replaceSeekMusic(GithubSnd,SoundName)
+local customAsset=ReplaceAudGit(GithubSnd,SoundName)
+for _,obj in ipairs(workspace:GetDescendants())do
+if obj:IsA("Model")and obj.Name=="SeekMovingNewClone"then
+local seekMusic=obj:FindFirstChild("SeekMusic")
+if seekMusic and seekMusic:IsA("Sound")then
+seekMusic.SoundId=customAsset
+end
+end
+end
+end
+
+coroutine.wrap(function()
+while true do
+game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+			
+replaceSeekMusic("https://github.com/Brololto/BUUMMM/blob/main/Screen_Recording_20230404-233303_YouTube%20(online-audio-converter.com).mp3?raw=true","RUN")
+end
+end)()
+
+
 --game.SoundService.AmbientReverb = Enum.ReverbType.Cave
 local modifyNeonCoroutine = coroutine.wrap(function()
     while true do
