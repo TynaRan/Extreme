@@ -31,9 +31,11 @@ end
 
 coroutine.wrap(function()
 while true do
-game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
+--game.ReplicatedStorage.GameData.LatestRoom.Changed:Wait()
 			
 replaceSeekMusic("https://github.com/Brololto/BUUMMM/blob/main/Screen_Recording_20230404-233303_YouTube%20(online-audio-converter.com).mp3?raw=true","Seek_RUN")
+
+wait(0.01)
 end
 end)()
 
