@@ -101,7 +101,7 @@ notify.new = function(message, duration)
 end
 notify.new("Welcome COJ V1.2", 4)
 
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/cat"))()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/TynaRan/Decoder/refs/heads/main/cat%20(1).txt"))()
 local platform = game:GetService("UserInputService").TouchEnabled 
     and (game:GetService("UserInputService").KeyboardEnabled and "Android")
     or (game:GetService("UserInputService").MouseEnabled and "Windows" or "Mac")
