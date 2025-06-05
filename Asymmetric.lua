@@ -769,4 +769,3 @@ RunService.RenderStepped:Connect(function()
 end)
 
 -- Config System
-AimbotTab:CreateConfigSystem("right")
