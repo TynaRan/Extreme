@@ -3,7 +3,7 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/TynaR
 
 -- Create main window
 local Window = Library:CreateWindow("btye.cc", Vector2.new(492, 598), Enum.KeyCode.RightControl)
-local MainTab = Window:CreateTab("Main")
+--local MainTab = Window:CreateTab("Main")
 local VisualsTab = Window:CreateTab("Visuals")
 local ConfigTab = Window:CreateTab("Config")
 
@@ -529,7 +529,7 @@ ConfigSection:AddDropdown("Font Style", {"UI", "System", "Plex", "Monospace"}, "
 end)
 
 -- Config System
-MainTab:CreateConfigSystem("right")
+--MainTab:CreateConfigSystem("right")
 
 -- Info Section
 local InfoSection = ConfigTab:CreateSector("esp load", "right")
